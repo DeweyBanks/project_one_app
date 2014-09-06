@@ -1,0 +1,23 @@
+body {
+  font-family: 'Open Sans' , sans-serif;
+  margin: 0;
+  background-color: #0046F9;
+}
+
+#posting {
+  width: 500px;
+  border-style: solid;
+  background-color: white;
+  margin: 5px;
+}
+
+#heading {
+  border-bottom: solid;
+  padding: 2px;
+}
+
+#body {
+  padding: 2px;
+  margin: 2px;
+}
+
