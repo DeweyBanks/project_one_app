@@ -28,10 +28,8 @@ class App < Sinatra::Base
   after do
     logger.info "Response Headers: #{response.headers}"
   end
-  ########################
-  # Configuration
-  ########################
-  $redis = Redis.new(:url => ENV["REDISTOGO_URL"])
+
+
 
    #######################
   # API KEYS
@@ -66,7 +64,7 @@ class App < Sinatra::Base
   end
 
   get '/forum' do
-    @redis["#{@post}"] = "#{@topic}"
+    # @redis["#{@post}"] = "#{@topic}"
     render(:erb, :forum)
   end
 
@@ -74,8 +72,8 @@ class App < Sinatra::Base
     post = params[:post]
     thread = params[:thread]
     entry = { post: post, thread: thread }
-    @redis.set["#{@post}"] = "#{@topic}"
-    redirect to("/post")
+   @redis.set["#{@post}"] = "#{@topic}"
+    render(:erb,:post)
   end
 
   post('/cat_store') do
