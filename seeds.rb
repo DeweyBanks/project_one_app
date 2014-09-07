@@ -10,7 +10,6 @@ $redis = Redis.new({:host => uri.host,
 
 $redis.flushdb
 
-$redis.set("entry:","")
 
     entries_data = [
       {
@@ -23,16 +22,8 @@ $redis.set("entry:","")
       }
   ]
 
-#trying to different ways, seeing which one works
-entries_data.each do |entry|
-  index = $redis.incr("entry:")
-  entry[:id] = index
-  $redis.set("entry:#{index}", entry.to_json)
+
+entries_data.each_with_index do | entry, index|
+  $redis.set("entry:#{index + 1}", entry.to_json)
 end
-
-
-
-# entry.each_with_index do | entry, index|
-#   $redis.set("entry:#{index + 1}", entry.to_json)
-# end
 binding.pry

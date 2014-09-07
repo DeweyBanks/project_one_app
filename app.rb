@@ -63,6 +63,15 @@ class App < Sinatra::Base
     render(:erb, :forum)
     end
 
+  post("/entries") do
+   $redis.set("entry:#{($redis.keys.sort.join[-1].to_i + 1).to_s}", "topic" => "#{params['topic']}", "message" => "#{params['message']}")
+   redirect("/entries")
+  end
+
+  get("/entries") do
+    @redis.get("*entry*")
+  end
+
 
 end
 
