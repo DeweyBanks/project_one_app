@@ -29,6 +29,10 @@ class App < Sinatra::Base
     logger.info "Response Headers: #{response.headers}"
   end
 
+  ########################
+  # DB Configuration
+  ########################
+  $redis = Redis.new(:url => ENV["REDISTOGO_URL"])
 
 
    #######################
@@ -45,41 +49,52 @@ class App < Sinatra::Base
   # Routes
   ########################
 
-  get('/') do
+  get("/") do
     state = SecureRandom.urlsafe_base64
     @url = " https://foursquare.com/oauth2/authenticate?client_id=#{CLIENT_ID}&response_type=code&redirect_uri=#{CALLBACK_URL}"
     render(:erb, :index)
   end
 
-  get('/oauth_callback') do
+  get("/oauth_callback") do
     code = params[:code]
     response = HTTParty.get("https://foursquare.com/oauth2/access_token?client_id=#{CLIENT_ID}&client_secret=#{CLIENT_SECRET}&grant_type=authorization_code&redirect_uri=#{CALLBACK_URL}&code=#{code}")
     # binding.pry
     session[:access_token] = response["access_token"]
-    render(:erb, :forum)
+    redirect to('/entry')
     end
 
-  get '/logout' do
+  get("/entry") do
+    @entry = $redis.keys("*entry*").map {|entry| JSON.parse($redis.get(entry))}
+    render(:erb, :index)
+  end
+
+  post("/entry") do
+    topic = params[:topic]
+    post = params[:post]
+    comment = params[:comment]
+    views = params[:views]
+    user = params[:user]
+    index = $redis.incr("entry:index")
+    entry = {topic: topic, post: post, comment: comment, id: index}
+    $redis.set("entry:#{index}", entry.to_json)
+    redirect to("/entry")
+  end
+
+  get("/entry/new") do
+    render(:erb, :forum)
+  end
+
+  get("/entry/:id") do
+    id = params[:id]
+    raw_entry = $redis.get("entry:#{id}")
+    @entry = JSON.parse(raw_entry)
+    render(:erb, :post)
+  end
+
+  get("/logout") do
     "I'm Done!"
   end
 
-  get '/forum' do
-    # @redis["#{@post}"] = "#{@topic}"
-    render(:erb, :forum)
-  end
-
-  post '/post' do
-    post = params[:post]
-    thread = params[:thread]
-    entry = { post: post, thread: thread }
-   @redis.set["#{@post}"] = "#{@topic}"
-    render(:erb,:post)
-  end
-
-  post('/cat_store') do
-    @number_of_cats = params[:quantity].to_i * 10
-    redirect to('/')
-  end
 end
 
 

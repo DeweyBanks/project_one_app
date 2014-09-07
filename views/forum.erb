@@ -3,14 +3,19 @@
 
 <h3>Welcome to the Nascar Forum</h3>
 
-<form  action="/post" method="post"  name="Nascar Forum">
+<form action="/entry/<%= @entry["id"] %>" method="POST">
   <fieldset>
     <legend align="center">Nascar Forum</legend>
     <div class="inputs">
-    <label for="topic">First Topic</label>
+    <label for="user">Username</label>
+    <input type="text" name="user" value="<%= @entry["user"]%>" id="new_username">
+    <input type="hidden" name="_method" value="PUT">
+    <label for="topic">Topic</label>
     <input id="topic" name="topic"><br>
-    <label for="thread">Thread</label>
-    <input id="thread" name="thread"><br>
+    <label for="post">Post</label>
+    <input id="post" name="post"><br>
+    <label for="comment">Comments</label>
+    <input id="comment" name="comment">
     </div>
     <input type="submit" value="Submit">
   </fieldset>

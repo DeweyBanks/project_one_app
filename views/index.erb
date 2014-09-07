@@ -1,10 +1,17 @@
 <h1>Nascar Forum</h1>
-<img src="http://carpaper.net/wp-content/uploads/2014/02/nascar-logo-picture.jpg">
 
+<div id="login">
 <% if session[:access_token] %>
   <a href="/logout">Logout</a>
 <% else %>
   <a href="<%= @url %>">Login with FOURSQUARE</a>
 <% end %>
-
-
+</div>
+<ul>
+<% @entry.each do |entry| %>
+  <li>
+    <a href="/entry/<%= entry["id"] %>"><%= entry["topic"] %></a>
+  </li>
+<% end %>
+</ul>
+<a href="/entry/new">Add a topic</a>

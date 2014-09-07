@@ -10,21 +10,29 @@ $redis = Redis.new({:host => uri.host,
 
 $redis.flushdb
 
+$redis.set("entry:","")
 
- forum_data = [
+    entry_data = [
       {
-        "topic" => "Should Tony Stewart Race?",
-        "Post" => "I don't think he should. He should sit out for a season.",
-        "comment" => "I agree with you. lol!",
-        "views" => 0,
-        "user" => "DeweyB"
+        "topic"   => "Should Tony Stewart Race?",
+        "post"    => "I don't think he should. He should sit out for a season.",
+      },
+      {
+        "topic"   => "Does Jr stand a chance?",
+        "post"    => "I don't think he does. His team has been in la la land.",
       }
   ]
 
-
-
-
-forum_data.each_with_index do | entry, index|
-  $redis.set("entry:#{index + 1}", entry.to_json)
+#trying to different ways, seeing which one works
+entry_data.each do |entry|
+  index = $redis.incr("entry:")
+  entry[:id] = index
+  $redis.set("entry:#{index}", entry.to_json)
 end
+
+
+
+# entry.each_with_index do | entry, index|
+#   $redis.set("entry:#{index + 1}", entry.to_json)
+# end
 binding.pry
