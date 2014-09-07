@@ -7,11 +7,4 @@
   <a href="<%= @url %>">Login with FOURSQUARE</a>
 <% end %>
 </div>
-<ul>
-<% @entry.each do |entry| %>
-  <li>
-    <a href="/entry/<%= entry["id"] %>"><%= entry["topic"] %></a>
-  </li>
-<% end %>
-</ul>
-<a href="/entry/new">Add a topic</a>
+

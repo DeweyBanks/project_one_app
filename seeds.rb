@@ -12,19 +12,19 @@ $redis.flushdb
 
 $redis.set("entry:","")
 
-    entry_data = [
+    entries_data = [
       {
         "topic"   => "Should Tony Stewart Race?",
-        "post"    => "I don't think he should. He should sit out for a season.",
+        "message"    => "I don't think he should. He should sit out for a season.",
       },
       {
         "topic"   => "Does Jr stand a chance?",
-        "post"    => "I don't think he does. His team has been in la la land.",
+        "message"    => "I don't think he does. His team has been in la la land.",
       }
   ]
 
 #trying to different ways, seeing which one works
-entry_data.each do |entry|
+entries_data.each do |entry|
   index = $redis.incr("entry:")
   entry[:id] = index
   $redis.set("entry:#{index}", entry.to_json)
