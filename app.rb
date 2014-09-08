@@ -69,7 +69,8 @@ class App < Sinatra::Base
   end
 
   get("/entries") do
-    @redis.get("*entry*")
+   @posting = JSON.parse($redis.get("entry:1"))
+   render(:erb, :show)
   end
 
 
