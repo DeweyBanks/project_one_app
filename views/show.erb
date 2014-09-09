@@ -6,11 +6,41 @@
 </div>
 
 
-<% @posts.each do |post| %>
-  <% post["messages"].each do |msg| %>
-  <%= msg["user"] %> says <%= msg["body"] %>
-  <% end %>
-<% end %>
+<div id="topic_heading">
+  <h3><%= TOPICS[0] %></h3>
+  <%= "posted by #{@posts[0]["user"]}  #{@timestamp}"  %>
+  <form action="/leave_comment">
+    <input type="submit" value="Leave a comment">
+  </form>
+
+  <div id="messages">
+    <%= MESSAGES[0][0]["user"] %><br>
+    <%= MESSAGES[0][0]["body"] %>
+  </div>
+
+  <div id="messages">
+     <%= MESSAGES[0][1]["user"] %><br>
+     <%= MESSAGES[0][1]["body"] %>
+  </div>
+</div>
+
+<div id="topic_heading">
+  <h3><%= TOPICS[1] %></h3>
+  <%= "posted by #{@posts[0]["user"]}  #{@timestamp}"  %>
+  <form action="/leave_comment">
+    <input type="submit" value="Leave a comment">
+  </form>
+
+  <div id="messages">
+    <%= MESSAGES[1][0]["user"] %><br>
+    <%= MESSAGES[1][0]["body"] %>
+  </div>
+
+  <div id="messages">
+     <%= MESSAGES[1][1]["user"] %><br>
+     <%= MESSAGES[1][1]["body"] %>
+  </div>
+</div>
 
 
 

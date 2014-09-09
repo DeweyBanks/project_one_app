@@ -52,3 +52,8 @@ entry.map do |x|
   new = $redis.get(x)
   old << JSON.parse(new)
   end
+
+
+@display_all_topics = @posts.each do |post|
+                       post["topic"]
+                      end

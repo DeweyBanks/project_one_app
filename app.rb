@@ -64,11 +64,17 @@ class App < Sinatra::Base
     end
 
   get("/entries") do
+    TOPICS = []
+    USERS = []
+    MESSAGES = []
     @timestamp = Time.new
     entry_keys = $redis.keys("*entry:*")   # get all the keys
     entries = entry_keys.map { |key| $redis.get(key) } # get all the values
     @posts = entries.map { |entry| JSON.parse(entry) } # convert json into array of hashes
-    render(:erb, :new_topic)
+    @posts.each {|post| TOPICS << post["topic"]}
+    @posts.each {|post| USERS << post["user"]}
+    @posts.each {|post| MESSAGES << post["messages"]}
+    render(:erb, :show)
   end
 
   post("/entries") do
