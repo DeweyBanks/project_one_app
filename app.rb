@@ -55,23 +55,30 @@ class App < Sinatra::Base
     render(:erb, :index)
   end
 
+
   get("/oauth_callback") do
     code = params[:code]
     response = HTTParty.get("https://foursquare.com/oauth2/access_token?client_id=#{CLIENT_ID}&client_secret=#{CLIENT_SECRET}&grant_type=authorization_code&redirect_uri=#{CALLBACK_URL}&code=#{code}")
-    # binding.pry
     session[:access_token] = response["access_token"]
-    render(:erb, :forum)
+    redirect("/entries")
     end
 
-  post("/entries") do
-   $redis.set("entry:#{($redis.keys.sort.join[-1].to_i + 1).to_s}", "topic" => "#{params['topic']}", "message" => "#{params['message']}")
-   redirect("/entries")
+  get("/entries") do
+    @timestamp = Time.new
+    entry_keys = $redis.keys("*entry:*")   # get all the keys
+    entries = entry_keys.map { |key| $redis.get(key) } # get all the values
+    @posts = entries.map { |entry| JSON.parse(entry) } # convert json into array of hashes
+    render(:erb, :new_topic)
   end
 
-  get("/entries") do
-   @posting = JSON.parse($redis.get("entry:1"))
-   render(:erb, :show)
+  post("/entries") do
+    index = $redis.incr("entries:counter")
+    entry = params
+    $redis.set("entry:#{index}", entry.to_json)
+    render(:erb, :show)
   end
+
+
 
 
 end

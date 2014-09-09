@@ -1,34 +1,73 @@
+/*<---- genral layout ---->*/
 body {
   font-family: 'Open Sans' , sans-serif;
-  margin: 0;
+  margin: auto;
+  width: 80%;
   background-color: #0046F9;
 }
 
-#posting {
+#heading {
+  margin: auto;
+  margin-bottom: 20px;
+  padding: 5px;
+  background-color: grey;
+  border: black solid;
+  box-shadow: 5px 5px;
+}
+
+h1 {
+  position: relative;
+  bottom: 15px;
+}
+
+/*<---- New Topic Form ---->*/
+
+
+#form {
+  margin: auto;
+  margin-bottom: 20px;
+  padding: 5px;
+  background-color: grey;
+  border: black solid;
+  box-shadow: 5px 5px;
+}
+
+#comments {
+  margin: auto;
+  margin-bottom: 20px;
+  padding: 5px;
+  background-color: grey;
+  border: black solid;
+  box-shadow: 5px 5px;
+}
+
+
+/*<---- Topics Display ---->*/
+
+#topic_heading {
+  margin: auto;
+  margin-bottom: 20px;
+  padding: 5px;
+  background-color: grey;
+  border: black solid;
+  box-shadow: 5px 5px;
+}
+
+#messages {
+  position: relative;
+  left: 20px;
+  padding: 5px;
   width: 500px;
-  height: 100px;
-  border-style: solid;
   background-color: white;
-  margin: 5px;
+  border-style: solid;
+  border-width: 1px;
 }
 
-#topic {
-
-
-}
-
-#post {
-  height: 2em;
-}
+/*<---- Login Page ---->*/
 
 #login {
   text-align: center;
   font-size: 3em;
-  background-color: red
-
+  background-color: red;
 }
 
-.inputs {
-  background-color: red
-  text: center;
-}

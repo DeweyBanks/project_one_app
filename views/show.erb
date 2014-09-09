@@ -1,5 +1,18 @@
-<h1>Nascar Forum</h1>
+<div id="heading">
+  <h1>Nascar Forum</h1>
+  <form action="/entries">
+    <input type="submit" value="Submit a new topic">
+  </form>
+</div>
 
-<%= @posting["topic"] %><br>
-<%= @posting["message"] %>
+
+<% @posts.each do |post| %>
+  <% post["messages"].each do |msg| %>
+  <%= msg["user"] %> says <%= msg["body"] %>
+  <% end %>
+<% end %>
+
+
+
+
 

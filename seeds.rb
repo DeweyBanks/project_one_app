@@ -11,19 +11,42 @@ $redis = Redis.new({:host => uri.host,
 $redis.flushdb
 
 
-    entries_data = [
-      {
-        "topic"   => "Should Tony Stewart Race?",
-        "message"    => "I don't think he should. He should sit out for a season.",
-      },
-      {
-        "topic"   => "Does Jr stand a chance?",
-        "message"    => "I don't think he does. His team has been in la la land.",
-      }
-  ]
+entries_data = [
+  {
+    "topic"    => "Should Tony Stewart Race?",
+    "user"     => "DeweyB",
+    "messages" => [
+        { "user" => "DeweybB",
+          "body" => "I don't think he should. He should sit out for a season."
+        },
+        {
+          "user" => "slydog84",
+          "body" => "I think he deserves a chance"
+        }
+    ]
+  },
+  {
+    "topic"    => "Does Jr stand a chance?",
+    "user"     => "Slydog84",
+    "messages" => [
+        {
+          "user" => "phildog81",
+          "body" => "I don't think he does. His team has been in la la land."
+        },
+        {
+          "user" => "dogbeachguy",
+          "body" => "He is killing it!"
+        }
+    ]
+  }
+]
 
 
-entries_data.each_with_index do | entry, index|
-  $redis.set("entry:#{index + 1}", entry.to_json)
+$redis.set("entries:counter", 0)
+
+entries_data.each do |entry|
+  index = $redis.incr("entries:counter")
+  entry["id"] = index
+  $redis.set("entry:#{index}", entry.to_json)
 end
-binding.pry
+
