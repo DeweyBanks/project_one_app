@@ -9,19 +9,19 @@ Nascar Forum is a C.R.U.D app. Designed to allow users to Post and discuss all o
 Nascar Forum was developed by Michael "Dewey" Hall as the first individual project for the summer class of the New York City Web Development Immersive course at General Assemb.ly. It was meant as a showcase of what i've learned over the past five weeks.
 
 Technologies Used:
-Ruby 2.1.1
-Redis
-HTTParty
-Sinatra
-JSON
-Testing using r-spec
-GEMS:
-ruby "2.1.2"
-gem 'httparty'
-gem 'sinatra', '1.4.5'
-gem 'redis',  '3.1.0'
-gem 'shotgun'
-gem 'rspec'
+Ruby 2.1.1,
+Redis,
+HTTParty,
+Sinatra,
+JSON,
+Testing using r-spec,
+GEMS:,
+ruby "2.1.2",
+gem 'httparty',
+gem 'sinatra', '1.4.5',
+gem 'redis',  '3.1.0',
+gem 'shotgun',
+gem 'rspec',
 
 uploaded to Heroku and Github.
 
