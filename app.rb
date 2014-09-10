@@ -3,7 +3,7 @@ require 'securerandom'
 require 'httparty'
 require 'redis'
 require 'json'
-require 'pry' if ENV['RACK_ENV'] == "development"
+
 
 class App < Sinatra::Base
 
