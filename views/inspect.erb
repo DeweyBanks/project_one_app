@@ -1,0 +1,11 @@
+<div id="topic_display">
+<h1> <%= @entry["topic"] %> </h1>
+    <%=   %>
+</div>
+
+
+<form action="/leave_comment">
+  <label for="message">Message</label>
+  <input type="text" name="message">
+  <input type="submit" value="Leave a comment">
+</form>

@@ -24,7 +24,7 @@
     string
   end
 
-  $regis.set(:messages => params["body"])
+  $redis.set(:messages => params["body"])
 
 <div id="topic_heading">
   <h3><%= @posts[0]["topic"] %></h3><br>
@@ -57,3 +57,73 @@ entry.map do |x|
 @display_all_topics = @posts.each do |post|
                        post["topic"]
                       end
+
+
+
+<div id="topic_heading">
+  <h3><%= TOPICS[0] %></h3>
+  <%= "posted by #{@posts[0]["user"]}  #{@timestamp}"  %>
+  <form action="/entries">
+    <input type="submit" value="Leave a comment">
+  </form>
+
+  <div id="messages">
+    <%= MESSAGES[0][0]["user"] %><br>
+    <%= MESSAGES[0][0]["body"] %>
+  </div>
+
+  <div id="messages">
+     <%= MESSAGES[0][1]["user"] %><br>
+     <%= MESSAGES[0][1]["body"] %>
+  </div>
+</div>
+
+<div id="topic_heading">
+  <h3><%= TOPICS[1] %></h3>
+  <%= "posted by #{@posts[0]["user"]}  #{@timestamp}"  %>
+  <form action="/entries">
+    <input type="submit" value="Leave a comment">
+  </form>
+
+  <div id="messages">
+    <%= MESSAGES[1][0]["user"] %><br>
+    <%= MESSAGES[1][0]["body"] %>
+  </div>
+
+  <div id="messages">
+     <%= MESSAGES[1][1]["user"] %><br>
+     <%= MESSAGES[1][1]["body"] %>
+  </div>
+</div>
+
+
+  <p>hardcodes</p>
+  <div id="messages">
+    <%= MESSAGES[0][0]["user"] %><br>
+    <%= MESSAGES[0][0]["body"] %>
+  </div>
+
+  <div id="messages">
+     <%= MESSAGES[0][1]["user"] %><br>
+     <%= MESSAGES[0][1]["body"] %>
+  </div>
+</div>
+
+
+
+#used on topic.erb
+
+ <% post["messages"].each do |message| %>
+    <%= render(:erb, :post, :locals => {:message => message})%>
+  <% end %>
+
+  <div id="topic_heading">
+<% @posts.each do |post| %>
+<%= render(:erb, :topic, :locals => {:post => post}) %>
+<% end %>
+</div>
+
+
+<form action="/leave_comment">
+    <input type="submit" value="Leave a comment">
+  </form>

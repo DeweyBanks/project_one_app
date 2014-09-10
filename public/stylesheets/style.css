@@ -44,6 +44,10 @@ h1 {
 
 /*<---- Topics Display ---->*/
 
+#topic_display {
+  background-color: grey;
+}
+
 #topic_heading {
   margin: auto;
   margin-bottom: 20px;

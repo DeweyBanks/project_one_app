@@ -64,16 +64,10 @@ class App < Sinatra::Base
     end
 
   get("/entries") do
-    TOPICS = []
-    USERS = []
-    MESSAGES = []
     @timestamp = Time.new
     entry_keys = $redis.keys("*entry:*")   # get all the keys
     entries = entry_keys.map { |key| $redis.get(key) } # get all the values
-    @posts = entries.map { |entry| JSON.parse(entry) } # convert json into array of hashes
-    @posts.each {|post| TOPICS << post["topic"]}
-    @posts.each {|post| USERS << post["user"]}
-    @posts.each {|post| MESSAGES << post["messages"]}
+    @post = entries.map { |entry| JSON.parse(entry) } # convert json into array of hashes
     render(:erb, :show)
   end
 
@@ -81,11 +75,32 @@ class App < Sinatra::Base
     index = $redis.incr("entries:counter")
     entry = params
     $redis.set("entry:#{index}", entry.to_json)
-    render(:erb, :show)
+    redirect("/entries")
   end
 
+  get("/new_topic") do
 
+    render(:erb, :new_topic)
+  end
 
+  post("/new_topic") do
+    index = $redis.incr("entries:counter")
+    entry = params
+    $redis.set("entry:#{index}", entry.to_json)
+    render(:erb, :new_topic)
+  end
+
+  get("/leave_comment") do
+    entry = params
+    $redis.set(:messages => params["body"])
+    render(:erb, :topic)
+  end
+
+  get("/topic/:id") do
+    id = params[:id]
+    @entry = JSON.parse($redis.get("entry:#{id}"))
+    render(:erb, :inspect)
+  end
 
 end
 
