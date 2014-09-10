@@ -15,6 +15,13 @@ HTTParty
 Sinatra
 JSON
 Testing using r-spec
+GEMS:
+ruby "2.1.2"
+gem 'httparty'
+gem 'sinatra', '1.4.5'
+gem 'redis',  '3.1.0'
+gem 'shotgun'
+gem 'rspec'
 
 uploaded to Heroku and Github.
 
