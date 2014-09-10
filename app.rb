@@ -60,7 +60,7 @@ class App < Sinatra::Base
     code = params[:code]
     response = HTTParty.get("https://foursquare.com/oauth2/access_token?client_id=#{CLIENT_ID}&client_secret=#{CLIENT_SECRET}&grant_type=authorization_code&redirect_uri=#{CALLBACK_URL}&code=#{code}")
     session[:access_token] = response["access_token"]
-    redirect("/entries")
+    redirect to("/entries")
     end
 
   get("/entries") do
@@ -73,10 +73,13 @@ class App < Sinatra::Base
 
   post("/entries") do
     index = $redis.incr("entries:counter")
-    entry = params
+    entry = {}
+    entry["messages"] = []
+    entry["topic"] = params["topic"]
+    entry["user"] = params["user"]
     entry["id"] = index
     $redis.set("entry:#{index}", entry.to_json)
-    redirect("/entries")
+    redirect to("/entries")
   end
 
   get("/new_topic") do
@@ -95,10 +98,13 @@ class App < Sinatra::Base
   end
 
   post("/leave_comment") do
-    entry = params
-    id = params[:id]
-    $redis.set(:messages => params["body"])
-    render(:erb, :show)
+    @timestamp = Time.new
+    topic = $redis.get("entry:#{params['topic_id']}")
+    parsed_topic = JSON.parse(topic)
+    message = {"user" => params["user"], "body" => params["body"] }
+    parsed_topic["messages"] << message
+    $redis.set("entry:#{params['topic_id']}", parsed_topic.to_json)
+    redirect to("/entries")
   end
 
   get("/leave_comment") do

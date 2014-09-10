@@ -1,8 +1,8 @@
 <div id="topic_display">
 <h1> <%= @entry["topic"] %> </h1>
-    <%=   %>
+<h3> <%= "Posted by #{@entry["user"]}" %> </h3>
+    <%= @timestamp %>
 </div>
-
 
 <div id="comments">
 <form action="/leave_comment" method="POST">
@@ -10,6 +10,14 @@
   <input type="text" name="user">
   <label for="body">Message</label>
   <input type="text" name="body">
+  <input type="hidden" name="topic_id" value="<%= @entry["id"] %>">
   <input type="submit" value="Leave a message">
 </form>
+</div>
+
+<div id="messages">
+  <% @entry["messages"].each do |message| %>
+  <%= "Posted by #{message["user"]}"%><br>
+  <%= message["body"]%><br><br>
+  <% end %>
 </div>

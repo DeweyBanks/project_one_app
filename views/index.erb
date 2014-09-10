@@ -1,10 +1,12 @@
-<h1>Nascar Forum</h1>
+<div id="heading">
+  <h1>Nascar Forum</h1>
+</div>
 
 <div id="login">
 <% if session[:access_token] %>
   <a href="/logout">Logout</a>
 <% else %>
-  <a href="<%= @url %>">Login with FOURSQUARE</a>
+  <h1 id="foursquare"><a href="<%= @url %>">Please Login with FOURSQUARE</a></h1>
 <% end %>
 </div>
 
