@@ -1,4 +1,4 @@
-class App < Sinatra::Base
+class ApplicationController < Sinatra::Base
 
   ########################
   # Configuration
