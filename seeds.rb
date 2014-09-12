@@ -9,10 +9,11 @@ $redis = Redis.new({:host => uri.host,
                     :password => uri.password})
 
 $redis.flushdb
-
+@timestamp = Time.new
 
 entries_data = [
   {
+    "time"     => @timestamp,
     "topic"    => "Should Tony Stewart Race?",
     "user"     => "DeweyB",
     "messages" => [
@@ -26,6 +27,7 @@ entries_data = [
     ]
   },
   {
+    "time"     => @timestamp,
     "topic"    => "Does Jr stand a chance?",
     "user"     => "Slydog84",
     "messages" => [
