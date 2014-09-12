@@ -35,7 +35,7 @@ class App < Sinatra::Base
    #######################
   # API KEYS
   #######################
-  CALLBACK_URL  = 'http://127.0.0.1:9292/oauth_callback'
+  CALLBACK_URL  = 'http://rotected-brook-1862.herokuapp.com/oauth_callback'
   ACCESS_TOKEN  = 'https://foursquare.com/oauth2/access_token'
   AUTORIZE_URL  = 'https://foursquare.com/oauth2/authorize'
   CLIENT_ID     = ENV['CLIENT_ID']
